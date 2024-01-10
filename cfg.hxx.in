@@ -1,0 +1,14 @@
+#ifndef CFG_HXX
+#define CFG_HXX
+
+#cmakedefine WINDOWS
+
+#define SHARED_EXPORT
+
+#ifdef WINDOWS
+
+#define SHARED_EXPORT __declspec(dllexport)
+
+#endif
+
+#endif

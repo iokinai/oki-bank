@@ -1,0 +1,53 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 5
+    },
+
+    "configurePresets": [
+        {
+            "name": "base",
+            "generator": "Ninja",
+            "binaryDir": "build/",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": true
+            },
+            "hidden": true
+        },
+        {
+            "name": "debug",
+            "inherits": "base",
+            "displayName": "Debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release",
+            "inherits": "base",
+            "displayName": "Release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "cleanDebugBuild",
+            "displayName": "Clean Debug Build",
+            "configurePreset": "debug",
+            "cleanFirst": true,
+            "configuration": "Debug"
+        },
+        {
+            "name": "cleanReleaseBuild",
+            "displayName": "Clean Release Build",
+            "configurePreset": "release",
+            "cleanFirst": true,
+            "configuration": "Release"
+        }
+    ]
+}
