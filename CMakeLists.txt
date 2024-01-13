@@ -4,6 +4,8 @@ include(cmake/info.cmake)
 
 project("${OKI_PROJECT}" LANGUAGES C CXX VERSION 1.0)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   set(WINDOWS ON)
 endif()
@@ -22,5 +24,6 @@ link_directories(lib/)
 
 add_library(oki-bank-models SHARED ${MODELS_PROJECT_FILES})
 add_library(oki-bank-sqlite3 SHARED ${SQLITE3_PROJECT_FILES})
+add_library(oki-bank-database SHARED ${DATABASE_PROJECT_FILES})
 
-target_link_libraries(oki-bank-sqlite3 PUBLIC sqlite3)
+target_link_libraries(oki-bank-sqlite3 PUBLIC oki-bank-database)
