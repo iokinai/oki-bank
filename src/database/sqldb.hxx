@@ -15,10 +15,12 @@ using query_result = std::unordered_map<std::string, std::string>;
 
 class SHARED_EXPORT sqldb {
 protected:
+  std::string path;
   sqlconnection **connection;
 
 public:
-  virtual ~sqldb() = 0;
+  virtual ~sqldb() = default;
+  sqldb(const std::string &path);
   virtual void prepare(const std::string &stmt, sqlstmt &rstmt) = 0;
   virtual void send(const sqlstmt &stmt) = 0;
   virtual std::shared_ptr<std::unordered_map<std::string, std::string>>

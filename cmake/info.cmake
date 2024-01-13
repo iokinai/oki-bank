@@ -6,15 +6,17 @@ set(MODELS_PROJECT_FILES
   src/models/private_user.cxx
   src/models/transaction.cxx
 )
-set(SQLITE3_INCLUDE_FILES 
-  include/sqlite3/sqlite3.c
-)
 set(DATABASE_PROJECT_FILES
   src/database/sqlstmt_exception.cxx
   src/database/sqlstmt.cxx
+  src/database/sqldb.cxx
 )
 set(SQLITE3_PROJECT_FILES
   src/database/sqlite/sqlite3_rstmt.cxx
   src/database/sqlite/sqlite3_db.cxx
   src/database/sqlite/exceptions/sqlite_exception.cxx
+)
+set(OKI_BANK
+  src/main.cxx
+  src/app_init.cxx
 )

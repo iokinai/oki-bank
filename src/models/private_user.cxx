@@ -22,18 +22,19 @@ private_user::private_user(std::string card_number, uint8_t cvc,
                    cvc, password_hash, secret_word, transactions) {}
 
 private_user::private_user(const private_user &us)
-    : public_user(us.get_card_number(), us.get_user_name(),
-                  us.get_user_description(), us.get_status(),
-                  us.get_registred_at(), us.get_last_online()),
+    : public_user(us.get_public_account_info().get_card_number(),
+                  us.get_user_name(), us.get_user_description(),
+                  us.get_status(), us.get_registred_at(), us.get_last_online()),
       priv_acc_info(us.get_private_account_info()),
       password_hash(us.get_password_hash()), secret_word(us.get_secret_word()),
       transactions(us.get_transactions()) {}
 
 private_user::private_user(private_user &&us)
-    : public_user(
-          std::move(us.get_card_number()), std::move(us.get_user_name()),
-          std::move(us.get_user_description()), std::move(us.get_status()),
-          std::move(us.get_registred_at()), std::move(us.get_last_online())),
+    : public_user(std::move(us.get_public_account_info().get_card_number()),
+                  std::move(us.get_user_name()),
+                  std::move(us.get_user_description()),
+                  std::move(us.get_status()), std::move(us.get_registred_at()),
+                  std::move(us.get_last_online())),
       priv_acc_info(std::move(us.get_private_account_info())),
       password_hash(std::move(us.get_password_hash())),
       secret_word(std::move(us.get_secret_word())),

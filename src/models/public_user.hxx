@@ -28,7 +28,6 @@ public:
 
   public_user(public_user &&user);
 
-  const std::string &get_card_number(void) const noexcept;
   const std::string &get_user_name(void) const noexcept;
   const std::string &get_user_description(void) const noexcept;
   user_status get_status(void) const noexcept;

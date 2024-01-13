@@ -7,9 +7,6 @@
 namespace okibank {
 
 class SHARED_EXPORT sqlite3_db : public sqldb {
-private:
-  std::string path;
-
 public:
   sqlite3_db(const std::string &path);
   ~sqlite3_db() override;

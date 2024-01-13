@@ -6,7 +6,7 @@
 
 namespace okibank {
 
-sqlite3_db::sqlite3_db(const std::string &path) : path(path) {
+sqlite3_db::sqlite3_db(const std::string &path) : sqldb(path) {
   sqlite3 **db = nullptr;
 
   int res = sqlite3_open(this->path.c_str(), db);
