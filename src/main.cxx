@@ -13,7 +13,7 @@ int main(int argc, const char *argv[]) {
 
   using db = okibank::sqlite3_db;
 
-  auto connection = okibank::app::open_db<db>("/home/okinai/hello");
+  auto connection = okibank::app::open_db<db>("hello");
 
   okibank::app::init_db(connection);
 }

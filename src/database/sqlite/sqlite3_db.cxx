@@ -1,7 +1,6 @@
 #include "sqlite3_db.hxx"
 #include "exceptions/sqlite_exception.hxx"
 #include "sqlite3.h"
-#include <iostream>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -17,16 +16,16 @@ sqlite3_db::sqlite3_db(const std::string &path) : sqldb(path) {
     throw sqlite_exception(res);
   }
 
-  this->connection = &db;
+  this->connection = db;
 }
 
-sqlite3_db::~sqlite3_db() { sqlite3_close(*this->connection); }
+sqlite3_db::~sqlite3_db() { sqlite3_close(this->connection); }
 
 void sqlite3_db::prepare(const std::string &stmt, sqlstmt &rstmt) {
-  sqlinnerstmt *statement = nullptr;
+  sqlite3_stmt *statement = nullptr;
 
-  int res = sqlite3_prepare_v2(*this->connection, stmt.c_str(), stmt.length(),
-                               &statement, nullptr);
+  int res = sqlite3_prepare_v2(this->connection, stmt.c_str(), -1, &statement,
+                               nullptr);
 
   if (res != 0) {
     throw sqlite_exception(res);
@@ -42,7 +41,7 @@ void sqlite3_db::send(const sqlstmt &stmt) {
     res = sqlite3_step(stmt.get_stmt());
   } while (res == SQLITE_BUSY);
 
-  if (res != 0) {
+  if (res != SQLITE_DONE) {
     throw sqlite_exception(res);
   }
 }
@@ -72,7 +71,7 @@ std::shared_ptr<query_result> sqlite3_db::exec(const std::string &stmt) {
   char *err_msg = nullptr;
 
   int exec_res = sqlite3_exec(
-      *this->connection, stmt.c_str(),
+      this->connection, stmt.c_str(),
       [](void *r, int cons, char **names, char **values) -> int {
         auto res = static_cast<query_result *>(r);
 

@@ -21,7 +21,7 @@ using query_result_ref = std::shared_ptr<query_result>;
 class SHARED_EXPORT sqldb {
 protected:
   std::string path;
-  sqlconnection **connection;
+  sqlconnection *connection;
 
 public:
   virtual ~sqldb() = default;
