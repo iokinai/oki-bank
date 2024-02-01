@@ -5,6 +5,9 @@ include(cmake/info.cmake)
 project("${OKI_PROJECT}" LANGUAGES C CXX VERSION 1.0)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(
+  CMAKE_CXX_STANDARD 23
+)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   set(WINDOWS ON)
@@ -15,8 +18,6 @@ configure_file("cfg.hxx.in" "cfg.hxx" @ONLY)
 include_directories(${CMAKE_BINARY_DIR} include/sqlite3)
 
 add_compile_options(-Wall)
-
-add_compile_options(-std=c++20)
 
 link_directories(lib/)
 

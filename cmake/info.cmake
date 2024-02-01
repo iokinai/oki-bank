@@ -18,5 +18,4 @@ set(SQLITE3_PROJECT_FILES
 )
 set(OKI_BANK
   src/main.cxx
-  src/app_init.cxx
 )

@@ -7,7 +7,7 @@
 namespace okibank {
 
 struct SHARED_EXPORT sqlite3_rstmt : public sqlstmt {
-  sqlite3_rstmt(sqlite3_stmt **stmt);
+  sqlite3_rstmt(sqlite3_stmt *stmt);
 
   void do_bind(int pos, int value) override;
   void do_bind(int pos, double value) override;

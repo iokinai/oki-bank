@@ -9,7 +9,7 @@ namespace okibank {
 
 class SHARED_EXPORT sqlstmt {
 protected:
-  sqlinnerstmt **stmt;
+  sqlinnerstmt *stmt;
 
   virtual void do_bind(int pos, int value) = 0;
   virtual void do_bind(int pos, double value) = 0;
@@ -17,11 +17,12 @@ protected:
   virtual void do_bind(int pos) = 0;
 
 public:
-  sqlstmt(sqlinnerstmt **stmt);
+  sqlstmt(sqlinnerstmt *stmt);
 
   template <class T> void bind(int pos, T value);
 
-  sqlinnerstmt **get_stmt(void) const noexcept;
+  sqlinnerstmt *get_stmt(void) const noexcept;
+  void set_stmt(sqlinnerstmt *stmt) noexcept;
 
   virtual ~sqlstmt() = default;
 };

@@ -12,8 +12,8 @@ public:
   ~sqlite3_db() override;
   void prepare(const std::string &stmt, sqlstmt &rstmt) override;
   void send(const sqlstmt &stmt) override;
-  std::shared_ptr<std::unordered_map<std::string, std::string>>
-  result(const sqlstmt &stmt) override;
+  query_result_ref result(const sqlstmt &stmt) override;
+  query_result_ref exec(const std::string &stmt) override;
 };
 
 } // namespace okibank
