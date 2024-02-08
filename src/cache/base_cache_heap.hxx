@@ -118,8 +118,7 @@ public:
 
   cache_iterator end() noexcept {
     if (__full) {
-      return cache_iterator(reinterpret_cast<private_user *>(cache) + size -
-                            obj_size());
+      return cache_iterator(reinterpret_cast<private_user *>(cache) + size);
     }
 
     return cache_iterator(reinterpret_cast<private_user *>(cache) + __last_pos);
