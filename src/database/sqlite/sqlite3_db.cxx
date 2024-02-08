@@ -19,7 +19,9 @@ sqlite3_db::sqlite3_db(const std::string &path) : sqldb(path) {
   this->connection = db;
 }
 
-sqlite3_db::~sqlite3_db() { sqlite3_close(this->connection); }
+sqlite3_db::~sqlite3_db() {
+  sqlite3_close(this->connection);
+}
 
 void sqlite3_db::prepare(const std::string &stmt, sqlstmt &rstmt) {
   sqlite3_stmt *statement = nullptr;

@@ -1,17 +1,17 @@
 #ifndef APP_INIT_HXX
 #define APP_INIT_HXX
 
-#include "concepts.hxx"
-#include "database/sqlite/sqlite3_db.hxx"
+#include "database/sqldb.hxx"
 #include "database/sqlite/sqlite3_rstmt.hxx"
-#include <memory>
 #include <string>
 
 namespace okibank::app {
 
-template <sql_database T> T open_db(const std::string &path) { return T(path); }
+template <std::derived_from<sqldb> T> T open_db(const std::string &path) {
+  return T(path);
+}
 
-template <sql_database T> void init_db(T &database) {
+template <std::derived_from<sqldb> T> void init_db(T &database) {
   std::string expr = "CREATE TABLE IF NOT EXISTS Users (      \
     id INTEGER PRIMARY KEY AUTOINCREMENT,                     \
     user_name TEXT,                                           \

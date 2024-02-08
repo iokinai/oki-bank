@@ -24,6 +24,7 @@ link_directories(lib/)
 add_library(oki-bank-models SHARED ${MODELS_PROJECT_FILES})
 add_library(oki-bank-sqlite3 SHARED ${SQLITE3_PROJECT_FILES})
 add_library(oki-bank-database SHARED ${DATABASE_PROJECT_FILES})
+add_library(oki-bank-thread SHARED ${OKI_THREAD})
 add_executable(oki-bank ${OKI_BANK})
 
 target_link_libraries(oki-bank-sqlite3 PUBLIC oki-bank-database)

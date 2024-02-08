@@ -19,3 +19,6 @@ set(SQLITE3_PROJECT_FILES
 set(OKI_BANK
   src/main.cxx
 )
+set(OKI_THREAD
+  src/thread/okimutex.cxx
+)

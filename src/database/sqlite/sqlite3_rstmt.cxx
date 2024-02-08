@@ -3,7 +3,8 @@
 
 namespace okibank {
 
-sqlite3_rstmt::sqlite3_rstmt(sqlite3_stmt *stmt) : sqlstmt(stmt) {}
+sqlite3_rstmt::sqlite3_rstmt(sqlite3_stmt *stmt) : sqlstmt(stmt) {
+}
 
 void sqlite3_rstmt::do_bind(int pos, int value) {
   sqlite3_bind_int(this->stmt, pos, value);
@@ -18,8 +19,12 @@ void sqlite3_rstmt::do_bind(int pos, const std::string &value) {
                     [](void *) {});
 }
 
-void sqlite3_rstmt::do_bind(int pos) { sqlite3_bind_null(this->stmt, pos); }
+void sqlite3_rstmt::do_bind(int pos) {
+  sqlite3_bind_null(this->stmt, pos);
+}
 
-sqlite3_rstmt::~sqlite3_rstmt() { sqlite3_finalize(this->stmt); }
+sqlite3_rstmt::~sqlite3_rstmt() {
+  sqlite3_finalize(this->stmt);
+}
 
 } // namespace okibank
