@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 include(cmake/info.cmake)
 
-project("${OKI_PROJECT}" LANGUAGES C CXX VERSION 1.0)
+project("${OKI_PROJECT}" LANGUAGES CXX VERSION 1.0)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(
@@ -25,7 +25,8 @@ add_library(oki-bank-models SHARED ${MODELS_PROJECT_FILES})
 add_library(oki-bank-sqlite3 SHARED ${SQLITE3_PROJECT_FILES})
 add_library(oki-bank-database SHARED ${DATABASE_PROJECT_FILES})
 add_library(oki-bank-thread SHARED ${OKI_THREAD})
+add_library(oki-bank-cache SHARED ${OKI_CACHE})
 add_executable(oki-bank ${OKI_BANK})
 
 target_link_libraries(oki-bank-sqlite3 PUBLIC oki-bank-database)
-target_link_libraries(oki-bank PUBLIC oki-bank-models PUBLIC oki-bank-sqlite3 PUBLIC libsqlite3.a)
+target_link_libraries(oki-bank PUBLIC oki-bank-models PUBLIC oki-bank-sqlite3 PUBLIC oki-bank-cache PUBLIC libsqlite3.a)

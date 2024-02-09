@@ -22,3 +22,9 @@ set(OKI_BANK
 set(OKI_THREAD
   src/thread/okimutex.cxx
 )
+set(OKI_CACHE
+  src/cache/cache_iterator.cxx
+  src/cache/base_cache_heap.cxx
+  src/cache/cache_controller.cxx
+  src/cache/std_cache_controller.cxx
+)

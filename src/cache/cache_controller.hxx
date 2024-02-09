@@ -5,13 +5,12 @@
 
 namespace okibank {
 
-template <heap_size size> class cache_controller {
+template <class T, heap_size size> class cache_controller {
 protected:
-  base_cache_heap<size> heap;
+  base_cache_heap<T, size> heap;
 
 public:
-  cache_controller<size>(const base_cache_heap<size> &heap) : heap(heap) {
-  }
+  cache_controller<T, size>(const base_cache_heap<T, size> &heap);
 
   virtual bool is_in_cache(public_account_info &cn,
                            private_account_info &cvc) const noexcept = 0;
@@ -19,9 +18,7 @@ public:
   virtual bool
   insert(std::pair<private_user, private_user> &&users) noexcept = 0;
 
-  void reset_heap() noexcept {
-    heap.reset();
-  }
+  void reset_heap() noexcept;
 };
 
 } // namespace okibank
