@@ -10,7 +10,7 @@ protected:
   base_cache_heap<T, size> heap;
 
 public:
-  cache_controller<T, size>(const base_cache_heap<T, size> &heap);
+  cache_controller(const base_cache_heap<T, size> &heap);
 
   virtual bool is_in_cache(public_account_info &cn,
                            private_account_info &cvc) const noexcept = 0;

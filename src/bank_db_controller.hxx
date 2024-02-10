@@ -1,0 +1,4 @@
+#ifndef BANK_DB_CONTROLLER_HXX
+#define BANK_DB_CONTROLLER_HXX
+
+#endif

@@ -27,8 +27,12 @@ private:
   heap_pos next_pos() noexcept;
   constexpr inline void reset() noexcept;
 
+  template <std::input_or_output_iterator It, class InnT> It iterator_begin();
+  template <std::input_or_output_iterator It, class InnT> It iterator_end();
+
 public:
   base_cache_heap();
+
   ~base_cache_heap();
 
   constexpr inline const T &insert(const T &tr);
@@ -38,6 +42,16 @@ public:
   inline cache_iterator begin() noexcept;
 
   cache_iterator end() noexcept;
+
+  inline const_cache_iterator cbegin() noexcept;
+
+  const_cache_iterator cend() noexcept;
+
+  constexpr inline bool operator==(base_cache_heap<T, size> &other);
+
+  constexpr inline bool operator!=(base_cache_heap<T, size> &other);
+
+  inline bool empty();
 
   friend class cache_controller<T, size>;
 };

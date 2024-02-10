@@ -26,6 +26,22 @@ constexpr inline void base_cache_heap<T, size>::reset() noexcept {
 }
 
 template <class T, heap_size size>
+template <std::input_or_output_iterator It, class InnT>
+It base_cache_heap<T, size>::iterator_begin() {
+  return It(reinterpret_cast<InnT>(cache));
+}
+
+template <class T, heap_size size>
+template <std::input_or_output_iterator It, class InnT>
+It base_cache_heap<T, size>::iterator_end() {
+  if (__full) {
+    return It(reinterpret_cast<InnT>(cache) + size);
+  }
+
+  return It(reinterpret_cast<InnT>(cache + __last_pos));
+}
+
+template <class T, heap_size size>
 base_cache_heap<T, size>::base_cache_heap()
     : cache(new byte[size * obj_size()]), __last_pos(0), __end(0) {
 }
@@ -52,16 +68,39 @@ void base_cache_heap<T, size>::rewrite(cache_iterator place,
 
 template <class T, heap_size size>
 inline cache_iterator base_cache_heap<T, size>::begin() noexcept {
-  return cache_iterator(reinterpret_cast<T *>(cache));
+  return iterator_begin<cache_iterator, private_user *>();
 }
 
 template <class T, heap_size size>
 cache_iterator base_cache_heap<T, size>::end() noexcept {
-  if (__full) {
-    return cache_iterator(reinterpret_cast<T *>(cache) + size);
-  }
+  return iterator_end<cache_iterator, private_user *>();
+}
 
-  return cache_iterator(reinterpret_cast<T *>(cache) + __last_pos);
+template <class T, heap_size size>
+inline const_cache_iterator base_cache_heap<T, size>::cbegin() noexcept {
+  return iterator_begin<const_cache_iterator, const private_user *>();
+}
+
+template <class T, heap_size size>
+const_cache_iterator base_cache_heap<T, size>::cend() noexcept {
+  return iterator_end<const_cache_iterator, const private_user *>();
+}
+
+template <class T, heap_size size>
+constexpr inline bool
+base_cache_heap<T, size>::operator==(base_cache_heap<T, size> &other) {
+  return this->cache == other.cache;
+}
+
+template <class T, heap_size size>
+constexpr inline bool
+base_cache_heap<T, size>::operator!=(base_cache_heap<T, size> &other) {
+  return this->cache != other.cache;
+}
+
+template <class T, heap_size size>
+inline bool base_cache_heap<T, size>::empty() {
+  return begin() == end();
 }
 
 template class base_cache_heap<private_user, 1024>;

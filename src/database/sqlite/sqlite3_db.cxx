@@ -1,6 +1,7 @@
 #include "sqlite3_db.hxx"
 #include "exceptions/sqlite_exception.hxx"
 #include "sqlite3.h"
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -77,7 +78,7 @@ std::shared_ptr<query_result> sqlite3_db::exec(const std::string &stmt) {
       [](void *r, int cons, char **names, char **values) -> int {
         auto res = static_cast<query_result *>(r);
 
-        for (int i{0}; i < sizeof(**names); i++) {
+        for (size_t i = 0; i < sizeof(**names); i++) {
           std::string name = names[i];
           (*res)[name] = values[i];
         }
