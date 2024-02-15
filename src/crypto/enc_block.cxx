@@ -31,6 +31,10 @@ enc_block::enc_block(enc_block &&other)
   other.data = nullptr;
 }
 
+enc_block::enc_block(byte init_value)
+    : data(new byte(init_value)), __last_pos(enc_block::SIZE - 1) {
+}
+
 enc_block &enc_block::operator=(const enc_block &other) {
   if (this != &other) {
     delete[] data;

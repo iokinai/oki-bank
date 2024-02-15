@@ -43,6 +43,8 @@ public:
 
   enc_block(enc_block &&other);
 
+  enc_block(byte init_value);
+
   enc_block &operator=(const enc_block &other);
 
   enc_block &operator=(enc_block &&other);
