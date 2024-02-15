@@ -12,7 +12,7 @@ namespace okibank {
 
 using heap_size = uint16_t;
 using heap_pos = heap_size;
-using byte = char;
+using byte = uint8_t;
 
 template <class T, heap_size size> class cache_controller;
 

@@ -28,3 +28,7 @@ set(OKI_CACHE
   src/cache/cache_controller.cxx
   src/cache/std_cache_controller.cxx
 )
+set(OKI_CRYPTO
+  src/crypto/crypto_base.cxx
+  src/crypto/enc_block.cxx
+)
