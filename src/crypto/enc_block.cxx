@@ -66,6 +66,11 @@ byte *enc_block::get_data() const noexcept {
 }
 
 byte &enc_block::operator[](size_t position) {
+  return const_cast<byte &>(static_cast<const enc_block &>(*this)[position]);
+
+}
+
+const byte &enc_block::operator[](size_t position) const {
   if (position >= SIZE) {
     throw std::out_of_range("Index should be less or equal to 63");
   }
@@ -76,4 +81,5 @@ byte &enc_block::operator[](size_t position) {
 enc_block::~enc_block() {
   delete[] data;
 }
+
 } // namespace okibank

@@ -31,4 +31,5 @@ set(OKI_CACHE
 set(OKI_CRYPTO
   src/crypto/crypto_base.cxx
   src/crypto/enc_block.cxx
+  src/crypto/sha256.cxx
 )

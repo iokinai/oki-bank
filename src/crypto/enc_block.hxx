@@ -4,7 +4,6 @@
 #include <cstddef>
 #include <cstdint>
 #include <initializer_list>
-#include <iterator>
 #include <stdexcept>
 #include <vector>
 namespace okibank {
@@ -50,6 +49,8 @@ public:
   enc_block &operator=(enc_block &&other);
 
   byte &operator[](size_t position);
+
+  const byte &operator[](size_t position) const;
 
   byte get_last_pos() const noexcept;
 

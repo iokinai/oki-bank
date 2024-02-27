@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 include(cmake/info.cmake)
+include(GenerateExportHeader)
 
 project("${OKI_PROJECT}" LANGUAGES CXX VERSION 1.0)
 
@@ -21,6 +22,8 @@ add_compile_options(-Wall)
 
 link_directories(lib/)
 
+find_library(sqlitelib NAMES sqlite3 REQUIRED)
+
 add_library(oki-bank-models SHARED ${MODELS_PROJECT_FILES})
 add_library(oki-bank-sqlite3 SHARED ${SQLITE3_PROJECT_FILES})
 add_library(oki-bank-database SHARED ${DATABASE_PROJECT_FILES})
@@ -29,5 +32,6 @@ add_library(oki-bank-cache SHARED ${OKI_CACHE})
 add_library(oki-bank-crypto SHARED ${OKI_CRYPTO})
 add_executable(oki-bank ${OKI_BANK})
 
-target_link_libraries(oki-bank-sqlite3 PUBLIC oki-bank-database)
-target_link_libraries(oki-bank PUBLIC oki-bank-models PUBLIC oki-bank-sqlite3 PUBLIC oki-bank-cache PUBLIC oki-bank-crypto PUBLIC libsqlite3.a)
+target_link_libraries(oki-bank-sqlite3 PUBLIC oki-bank-database PUBLIC ${sqlitelib})
+
+target_link_libraries(oki-bank PUBLIC oki-bank-models PUBLIC oki-bank-sqlite3 PUBLIC oki-bank-cache PUBLIC oki-bank-crypto)
