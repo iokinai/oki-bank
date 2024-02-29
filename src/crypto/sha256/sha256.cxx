@@ -1,6 +1,5 @@
 #include "sha256.hxx"
-#include "crypto_base.hxx"
-#include "enc_block.hxx"
+#include "../crypto_base.hxx"
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -43,32 +42,32 @@ inline uint32_t maj(uint32_t x, uint32_t y, uint32_t z) noexcept {
   return (x & y) ^ (x & z) ^ (y & z);
 }
 
-static void __fill_zeros(enc_block &block, byte first) {
+static void __fill_zeros(sha256_block &block, byte first) {
   byte last_pos = block.get_last_pos();
 
-  if (last_pos == enc_block::SIZE - 1) {
+  if (last_pos == sha256_block::SIZE - 1) {
     return;
   }
 
   block[last_pos] = first;
 
-  for (byte i = last_pos + 1; i < enc_block::SIZE - sizeof(uint64_t); i++) {
+  for (byte i = last_pos + 1; i < sha256_block::SIZE - sizeof(uint64_t); i++) {
     block[i] = 0;
   }
 }
 
-static void __fill_size(enc_block &block, uint64_t size) noexcept {
+static void __fill_size(sha256_block &block, uint64_t size) noexcept {
   if constexpr (std::endian::native == std::endian::little) {
     size = swap_endian(size);
   }
 
-  auto place = reinterpret_cast<uint64_t *>(block.get_data() + enc_block::SIZE -
-                                            sizeof(uint64_t));
+  auto place = reinterpret_cast<uint64_t *>(
+      block.get_data() + sha256_block::SIZE - sizeof(uint64_t));
   *place = size;
 }
 
 static std::array<uint32_t, 64>
-__generate_message_schedule(const enc_block &block) {
+__generate_message_schedule(const sha256_block &block) {
   std::array<uint32_t, 64> ms;
 
   for (int t{0}; t < 16; ++t) {
@@ -76,7 +75,7 @@ __generate_message_schedule(const enc_block &block) {
             (block[t * 4 + 2] << 8) | (block[t * 4 + 3]);
   }
 
-  for (int t = 16; t < enc_block::SIZE; ++t) {
+  for (int t = 16; t < sha256_block::SIZE; ++t) {
     ms[t] =
         low_sigma1(ms[t - 2]) + ms[t - 7] + low_sigma0(ms[t - 15]) + ms[t - 16];
   }
@@ -84,10 +83,10 @@ __generate_message_schedule(const enc_block &block) {
   return ms;
 }
 
-const std::vector<enc_block> split_into_sha256_blocks(std::string expr) {
-  int size = (expr.length() + enc_block::SIZE - 1) / enc_block::SIZE;
+const std::vector<sha256_block> split_into_sha256_blocks(std::string expr) {
+  int size = (expr.length() + sha256_block::SIZE - 1) / sha256_block::SIZE;
 
-  std::vector<enc_block> blocks(size);
+  std::vector<sha256_block> blocks(size);
 
   str_iterator current = expr.begin();
 
@@ -97,10 +96,11 @@ const std::vector<enc_block> split_into_sha256_blocks(std::string expr) {
 
   auto &last_block = blocks.back();
 
-  if (last_block.get_last_pos() != enc_block::SIZE - 1) {
+  if (last_block.get_last_pos() != sha256_block::SIZE - 1) {
     __fill_zeros(last_block, 1 << 7);
 
-    if (enc_block::SIZE - (last_block.get_last_pos() + 1) >= sizeof(uint64_t)) {
+    if (sha256_block::SIZE - (last_block.get_last_pos() + 1) >=
+        sizeof(uint64_t)) {
       __fill_size(last_block, expr.length() * 8);
     } else {
       last_block = blocks.emplace_back(0);
@@ -117,7 +117,7 @@ const std::vector<enc_block> split_into_sha256_blocks(std::string expr) {
   return blocks;
 }
 
-std::array<uint32_t, 8> process_hash(const std::vector<enc_block> &blocks) {
+std::array<uint32_t, 8> process_hash(const std::vector<sha256_block> &blocks) {
   std::array<uint32_t, 8> values;
   uint32_t a, b, c, d, e, f, g, h;
   uint32_t T1, T2;
@@ -178,7 +178,7 @@ std::string sha256_result_into_str(const std::array<uint32_t, 8> &hash) {
 } // namespace
 
 std::array<uint32_t, 8> to_array(std::string value) {
-  const std::vector<enc_block> blocks = split_into_sha256_blocks(value);
+  const std::vector<sha256_block> blocks = split_into_sha256_blocks(value);
   return process_hash(blocks);
 }
 

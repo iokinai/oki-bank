@@ -3,4 +3,5 @@
 .VSCodeCounter
 build/
 *.out
+*.o
 test.*

@@ -1,4 +1,4 @@
-#include "enc_block.hxx"
+#include "sha256_block.hxx"
 #include <cstring>
 #include <initializer_list>
 #include <stdexcept>
@@ -10,32 +10,32 @@ namespace okibank {
 using vec_iterator = std::vector<byte>::iterator;
 using init_iterator = std::initializer_list<byte>::iterator;
 
-enc_block::enc_block() : data(new byte[SIZE]) {
+sha256_block::sha256_block() : data(new byte[SIZE]) {
 }
 
-enc_block::enc_block(const enc_block &other)
+sha256_block::sha256_block(const sha256_block &other)
     : data(new byte[SIZE]), __last_pos(other.__last_pos) {
   std::memcpy(this->data, other.data, SIZE);
 }
 
-enc_block::enc_block(std::initializer_list<byte> &&bytes)
-    : enc_block(bytes.begin(), bytes.end()) {
+sha256_block::sha256_block(std::initializer_list<byte> &&bytes)
+    : sha256_block(bytes.begin(), bytes.end()) {
 }
 
-enc_block::enc_block(std::vector<byte> &bytes)
-    : enc_block(bytes.begin(), bytes.end()) {
+sha256_block::sha256_block(std::vector<byte> &bytes)
+    : sha256_block(bytes.begin(), bytes.end()) {
 }
 
-enc_block::enc_block(enc_block &&other)
+sha256_block::sha256_block(sha256_block &&other)
     : data(other.data), __last_pos(std::move(other.__last_pos)) {
   other.data = nullptr;
 }
 
-enc_block::enc_block(byte init_value)
-    : data(new byte(init_value)), __last_pos(enc_block::SIZE - 1) {
+sha256_block::sha256_block(byte init_value)
+    : data(new byte(init_value)), __last_pos(sha256_block::SIZE - 1) {
 }
 
-enc_block &enc_block::operator=(const enc_block &other) {
+sha256_block &sha256_block::operator=(const sha256_block &other) {
   if (this != &other) {
     delete[] data;
     data = new byte[SIZE];
@@ -46,7 +46,7 @@ enc_block &enc_block::operator=(const enc_block &other) {
   return *this;
 }
 
-enc_block &enc_block::operator=(enc_block &&other) {
+sha256_block &sha256_block::operator=(sha256_block &&other) {
   if (this != &other) {
     delete[] data;
     data = other.data;
@@ -57,20 +57,19 @@ enc_block &enc_block::operator=(enc_block &&other) {
   return *this;
 }
 
-byte enc_block::get_last_pos() const noexcept {
+byte sha256_block::get_last_pos() const noexcept {
   return __last_pos;
 }
 
-byte *enc_block::get_data() const noexcept {
+byte *sha256_block::get_data() const noexcept {
   return data;
 }
 
-byte &enc_block::operator[](size_t position) {
-  return const_cast<byte &>(static_cast<const enc_block &>(*this)[position]);
-
+byte &sha256_block::operator[](size_t position) {
+  return const_cast<byte &>(static_cast<const sha256_block &>(*this)[position]);
 }
 
-const byte &enc_block::operator[](size_t position) const {
+const byte &sha256_block::operator[](size_t position) const {
   if (position >= SIZE) {
     throw std::out_of_range("Index should be less or equal to 63");
   }
@@ -78,7 +77,7 @@ const byte &enc_block::operator[](size_t position) const {
   return data[position];
 }
 
-enc_block::~enc_block() {
+sha256_block::~sha256_block() {
   delete[] data;
 }
 

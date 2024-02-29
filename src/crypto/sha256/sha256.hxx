@@ -1,7 +1,7 @@
-#ifndef CRYPTO_SHA256_HXX
-#define CRYPTO_SHA256_HXX
+#ifndef CRYPTO_SHA256_SHA256_HXX
+#define CRYPTO_SHA256_SHA256_HXX
 
-#include "enc_block.hxx"
+#include "sha256_block.hxx"
 #include <array>
 #include <cstdint>
 #include <string>
@@ -36,9 +36,9 @@ const constexpr std::array<uint32_t, 64> CONSTANTS = {
     0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
     0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
-const std::vector<enc_block> split_into_sha256_blocks(std::string expr);
+const std::vector<sha256_block> split_into_sha256_blocks(std::string expr);
 
-std::array<uint32_t, 8> process_hash(const std::vector<enc_block> &blocks);
+std::array<uint32_t, 8> process_hash(const std::vector<sha256_block> &blocks);
 
 std::string sha256_result_into_str(const std::array<uint32_t, 8> &hash);
 

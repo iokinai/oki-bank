@@ -1,5 +1,5 @@
-#ifndef CRYPTO_ENC_BLOCK_HXX
-#define CRYPTO_ENC_BLOCK_HXX
+#ifndef CRYPTO_SHA256_SHA256_BLOCK_HXX
+#define CRYPTO_SHA256_SHA256_BLOCK_HXX
 
 #include <cstddef>
 #include <cstdint>
@@ -10,12 +10,12 @@ namespace okibank {
 
 using byte = uint8_t;
 
-class enc_block final {
+class sha256_block final {
 private:
   byte *data;
 
   template <std::input_or_output_iterator Iter>
-  enc_block(Iter begin, Iter end) : data(new byte[SIZE]), __last_pos(SIZE) {
+  sha256_block(Iter begin, Iter end) : data(new byte[SIZE]), __last_pos(SIZE) {
     if ((end - begin) + 1 != SIZE) {
       delete[] data;
       throw std::out_of_range("Elements count should be equal to 64");
@@ -32,21 +32,21 @@ private:
   byte __last_pos = 0;
 
 public:
-  enc_block();
+  sha256_block();
 
-  enc_block(std::initializer_list<byte> &&bytes);
+  sha256_block(std::initializer_list<byte> &&bytes);
 
-  enc_block(std::vector<byte> &bytes);
+  sha256_block(std::vector<byte> &bytes);
 
-  enc_block(const enc_block &other);
+  sha256_block(const sha256_block &other);
 
-  enc_block(enc_block &&other);
+  sha256_block(sha256_block &&other);
 
-  enc_block(byte init_value);
+  sha256_block(byte init_value);
 
-  enc_block &operator=(const enc_block &other);
+  sha256_block &operator=(const sha256_block &other);
 
-  enc_block &operator=(enc_block &&other);
+  sha256_block &operator=(sha256_block &&other);
 
   byte &operator[](size_t position);
 
@@ -56,7 +56,7 @@ public:
 
   byte *get_data() const noexcept;
 
-  ~enc_block();
+  ~sha256_block();
 
   template <std::input_or_output_iterator Iter>
   void set_values(Iter &start, const Iter &end) noexcept {
