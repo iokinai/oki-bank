@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace okibank::aes {
+namespace okibank {
 
 using byte = uint8_t;
 

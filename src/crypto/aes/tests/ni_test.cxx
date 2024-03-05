@@ -1,4 +1,4 @@
-#include "aes_ni.hxx"
+#include "../aes_ni.hxx"
 #include <iostream>
 
 int main() {
