@@ -2,13 +2,9 @@
 #define CRYPTO_AES_NI_AES128_NI_HXX
 
 #include "../aes_types.hxx"
+#include <string>
+#include <vector>
 
-namespace okibank {
-
-extern const byte AES128_ROUNDS;
-extern const byte AES128_KEY_LEN;
-extern const byte AES128_BLOCK_SIZE;
-
-} // namespace okibank
+namespace okibank::aes {} // namespace okibank::aes
 
 #endif
