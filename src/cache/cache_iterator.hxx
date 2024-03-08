@@ -31,84 +31,36 @@ bool operator==(const It &val1, const It &val2) noexcept;
 template <is_oki_iterator It>
 bool operator!=(const It &val1, const It &val2) noexcept;
 
-class cache_iterator {
-  private_user *current;
+template <is_oki_iterator It> It::reference operator*(It &val) noexcept;
 
+class cache_iterator {
 public:
   using value_type = private_user;
-  using reference = private_user;
+  using reference = private_user &;
   using pointer = private_user *;
   using iterator_category = std::input_iterator_tag;
   using difference_type = int16_t;
 
-  explicit cache_iterator(private_user *curr);
+  explicit cache_iterator(pointer curr);
 
-  constexpr inline private_user *get_current() noexcept;
+  constexpr inline pointer operator->() noexcept;
 
-  constexpr inline private_user &operator*() const noexcept;
-
-  constexpr inline private_user *operator->() noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It &operator++(It &val) noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It operator++(It &val, int) noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It &operator--(It &val) noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It operator--(It &val, int) noexcept;
-
-  template <is_oki_iterator It>
-  friend int16_t operator-(const It &val1, const It &&val2) noexcept;
-
-  template <is_oki_iterator It>
-  friend bool operator==(const It &val1, const It &val2) noexcept;
-
-  template <is_oki_iterator It>
-  friend bool operator!=(const It &val1, const It &val2) noexcept;
+  pointer current;
 };
 
 class const_cache_iterator {
-  const private_user *current;
-
 public:
-  using value_type = private_user;
-  using reference = private_user;
-  using pointer = private_user *;
+  using value_type = const private_user;
+  using reference = const private_user &;
+  using pointer = const private_user *;
   using iterator_category = std::input_iterator_tag;
   using difference_type = int16_t;
 
-  explicit const_cache_iterator(const private_user *curr);
+  explicit const_cache_iterator(pointer curr);
 
-  constexpr inline const private_user *get_current() const noexcept;
+  constexpr inline pointer operator->() noexcept;
 
-  constexpr inline const private_user &operator*() const noexcept;
-
-  constexpr inline const private_user *operator->() noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It &operator++(It &val) noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It operator++(It &val, int) noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It &operator--(It &val) noexcept;
-
-  template <is_oki_iterator It>
-  friend constexpr inline It operator--(It &val, int) noexcept;
-
-  template <is_oki_iterator It>
-  friend int16_t operator-(const It &val1, const It &&val2) noexcept;
-
-  template <is_oki_iterator It>
-  friend bool operator==(const It &val1, const It &val2) noexcept;
-
-  template <is_oki_iterator It>
-  friend bool operator!=(const It &val1, const It &val2) noexcept;
+  pointer current;
 };
 
 } // namespace okibank

@@ -43,36 +43,22 @@ bool operator!=(const It &val1, const It &val2) noexcept {
   return val1.current != val2.current;
 }
 
-cache_iterator::cache_iterator(private_user *curr) : current(curr) {
+cache_iterator::cache_iterator(cache_iterator::pointer curr) : current(curr) {
 }
 
-constexpr inline private_user *cache_iterator::get_current() noexcept {
+constexpr inline cache_iterator::pointer cache_iterator::operator->() noexcept {
   return current;
 }
 
-constexpr inline private_user &cache_iterator::operator*() const noexcept {
-  return *current;
-}
-
-constexpr inline private_user *cache_iterator::operator->() noexcept {
-  return current;
-}
-
-const_cache_iterator::const_cache_iterator(const private_user *curr)
+const_cache_iterator::const_cache_iterator(const_cache_iterator::pointer curr)
     : current(curr) {
 }
 
-constexpr inline const private_user *
-const_cache_iterator::get_current() const noexcept {
-  return current;
+template <is_oki_iterator It> It::reference operator*(It &val) noexcept {
+  return *val.current;
 }
 
-constexpr inline const private_user &
-const_cache_iterator::operator*() const noexcept {
-  return *current;
-}
-
-constexpr inline const private_user *
+constexpr inline const_cache_iterator::pointer
 const_cache_iterator::operator->() noexcept {
   return current;
 }
@@ -112,4 +98,9 @@ template bool operator==(const const_cache_iterator &val1,
 
 template bool operator!=(const const_cache_iterator &val1,
                          const const_cache_iterator &val2) noexcept;
+
+template private_user &operator*(cache_iterator &obj) noexcept;
+
+template const private_user &operator*(const_cache_iterator &obj) noexcept;
+
 } // namespace okibank
