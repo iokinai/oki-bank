@@ -50,7 +50,8 @@ std::vector<state> split_into_aes_cbc_blocks(std::string value) noexcept {
     state block;
 
     try {
-      block = __values_from_string<AES128_STATE_SIZE>(value, i + 16 * i);
+      block = __values_from_string<AES128_STATE_SIZE>(
+          value, i + AES128_STATE_SIZE * i);
     } catch (std::invalid_argument) {
       return {};
     }

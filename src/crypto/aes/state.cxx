@@ -1,5 +1,6 @@
 #include "state.hxx"
 #include "aes_consts.hxx"
+#include "aes_math.hxx"
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -125,6 +126,10 @@ inline state::const_state_iterator state::cbegin() const noexcept {
 
 inline state::const_state_iterator state::cend() const noexcept {
   return state::const_state_iterator(&bytes[AES128_STATE_SIZE]);
+}
+
+inline __int128 state::to_int128() const noexcept {
+  return array_into_int128(const_cast<uint8_t *>(this->bytes.data()));
 }
 
 } // namespace okibank::aes

@@ -50,7 +50,7 @@ public:
   static const uint8_t ARRAY_SIZE = AES128_BLOCK_SIZE * 4;
 
 private:
-  std::array<uint8_t, ARRAY_SIZE> bytes;
+  alignas(16) std::array<uint8_t, ARRAY_SIZE> bytes;
 
 public:
   state();
@@ -77,6 +77,8 @@ public:
   state &operator^=(const state &p) noexcept;
 
   const std::array<uint8_t, ARRAY_SIZE> &get_bytes() const;
+
+  inline __int128 to_int128() const noexcept;
 
   class state_iterator {
   public:

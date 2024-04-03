@@ -34,5 +34,6 @@ set(OKI_CRYPTO
   src/crypto/sha256/sha256.cxx
   src/crypto/aes/state.cxx
   src/crypto/aes/aes_common.cxx
+  src/crypto/aes/aes_math.cxx
   src/crypto/aes/ni/aes128_ni.cxx
 )
