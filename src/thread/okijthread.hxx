@@ -1,3 +1,6 @@
+#ifndef THREAD_OKIJTHREAD_HXX
+#define THREAD_OKIJTHREAD_HXX
+
 #include <thread>
 
 namespace okibank {
@@ -20,3 +23,5 @@ public:
 };
 
 } // namespace okibank
+
+#endif

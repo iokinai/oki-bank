@@ -3,7 +3,11 @@
 
 #include "database/sqldb.hxx"
 #include "database/sqlite/sqlite3_rstmt.hxx"
+#include <lib/http/httplib.h>
+#include <memory>
 #include <string>
+
+using namespace httplib;
 
 namespace okibank::app {
 
@@ -30,6 +34,8 @@ template <std::derived_from<sqldb> T> void init_db(T &database) {
   database.prepare(expr, stmt);
   database.send(stmt);
 }
+
+std::shared_ptr<Server> create_http_server();
 
 } // namespace okibank::app
 

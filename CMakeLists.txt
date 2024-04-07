@@ -16,7 +16,7 @@ endif()
 
 configure_file("cfg.hxx.in" "cfg.hxx" @ONLY)
 
-include_directories(${CMAKE_BINARY_DIR} include/sqlite3)
+include_directories(${CMAKE_BINARY_DIR} include)
 
 add_compile_options(-Wall)
 
@@ -30,8 +30,9 @@ add_library(oki-bank-database SHARED ${DATABASE_PROJECT_FILES})
 add_library(oki-bank-thread SHARED ${OKI_THREAD})
 add_library(oki-bank-cache SHARED ${OKI_CACHE})
 add_library(oki-bank-crypto SHARED ${OKI_CRYPTO})
+add_library(oki-bank-http SHARED ${OKI_SERVER})
 add_executable(oki-bank ${OKI_BANK})
 
 target_link_libraries(oki-bank-sqlite3 PUBLIC oki-bank-database PUBLIC ${sqlitelib})
 
-target_link_libraries(oki-bank PUBLIC oki-bank-models PUBLIC oki-bank-sqlite3 PUBLIC oki-bank-cache PUBLIC oki-bank-crypto)
+target_link_libraries(oki-bank PUBLIC oki-bank-models PUBLIC oki-bank-sqlite3 PUBLIC oki-bank-cache PUBLIC oki-bank-crypto PUBLIC oki-bank-http)

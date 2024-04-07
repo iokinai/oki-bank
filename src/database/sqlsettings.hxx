@@ -1,7 +1,7 @@
 #ifndef DATABASE_SQLSETTINGS_HXX
 #define DATABASE_SQLSETTINGS_HXX
 
-#include <sqlite3.h>
+#include <lib/sqlite3/sqlite3.h>
 
 #include <cfg.hxx>
 

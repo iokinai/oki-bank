@@ -78,7 +78,7 @@ public:
 
   const std::array<uint8_t, ARRAY_SIZE> &get_bytes() const;
 
-  inline __int128 to_int128() const noexcept;
+  operator __int128() const noexcept;
 
   class state_iterator {
   public:

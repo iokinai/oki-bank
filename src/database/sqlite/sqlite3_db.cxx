@@ -1,8 +1,8 @@
 #include "sqlite3_db.hxx"
 #include "exceptions/sqlite_exception.hxx"
 #include <cstddef>
+#include <lib/sqlite3/sqlite3.h>
 #include <memory>
-#include <sqlite3.h>
 #include <string>
 #include <unordered_map>
 

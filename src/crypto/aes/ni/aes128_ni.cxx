@@ -14,46 +14,15 @@ __vector_push_back_state_range(std::vector<uint8_t> &vec, const state &st) {
   }
 }
 
-std::vector<uint8_t>
-encrypt_aes128(std::string data,
-               const std::array<std::uint8_t, AES128_STATE_SIZE> &key,
-               const std::array<std::uint8_t, AES128_STATE_SIZE> &IV) {
+std::array<std::uint8_t, AES128_STATE_SIZE>
+encrypt_block_aes128(const std::array<std::uint8_t, AES128_STATE_SIZE> &block,
+                     const std::array<std::uint8_t, AES128_STATE_SIZE> &key) {
 
-  std::vector<state> states = split_into_aes_cbc_blocks(data);
-
-  std::vector<state> result_states;
-  std::vector<uint8_t> result;
   alignas(16) __int128 temp_num = 0;
 
-  std::array<std::uint8_t, AES128_STATE_SIZE> prev = IV;
+  state st(block);
 
-  alignas(16) __int128 key_data =
-      array_into_int128(const_cast<uint8_t *>(key.data()));
-
-  for (auto &st : states) {
-    st ^= prev;
-
-    alignas(16) __int128 state_data =
-        array_into_int128(const_cast<uint8_t *>(st.get_bytes().data()));
-
-    /*
-
-          movq $0, %%rcx
-
-          aesloop:
-
-          aesenc %%xmm1, %%xmm2
-
-          inc %%rcx
-
-          movq $9, %%rbx
-          cmpq %%rcx, %%rbx
-          jnl aesloop
-
-
-    */
-
-    asm volatile(R"(
+  asm volatile(R"(
       movdqu %1, %%xmm1
       movdqu %2, %%xmm2
 
@@ -61,20 +30,12 @@ encrypt_aes128(std::string data,
 
       movdqu %%xmm1, %0
     )"
-                 : "=g"(temp_num)
-                 : "g"(state_data), "g"(key_data)
-                 : "rcx", "rbx", "xmm1", "xmm2");
+               : "=g"(temp_num)
+               : "g"(static_cast<__int128>(st)),
+                 "g"(array_into_int128(const_cast<uint8_t *>(key.data())))
+               : "rcx", "rbx", "xmm1", "xmm2");
 
-    prev = int128_into_array(temp_num);
-
-    result_states.push_back(state(prev));
-  }
-
-  for (auto &rs : result_states) {
-    __vector_push_back_state_range(result, rs);
-  }
-
-  return result;
+  return int128_into_array(temp_num);
 }
 
 } // namespace okibank::aes

@@ -18,13 +18,13 @@ set(SQLITE3_PROJECT_FILES
 )
 set(OKI_BANK
   src/main.cxx
+  src/app_init.cxx
 )
 set(OKI_THREAD
   src/thread/okimutex.cxx
 )
 set(OKI_CACHE
   src/cache/cache_iterator.cxx
-  src/cache/base_cache_heap.cxx
   src/cache/cache_controller.cxx
   src/cache/std_cache_controller.cxx
 )
@@ -36,4 +36,9 @@ set(OKI_CRYPTO
   src/crypto/aes/aes_common.cxx
   src/crypto/aes/aes_math.cxx
   src/crypto/aes/ni/aes128_ni.cxx
+)
+set(OKI_SERVER 
+  src/http/llhs/lowlevel.cxx
+  src/http/llhs/server.cxx
+  src/http/llhs/endpoint.cxx
 )

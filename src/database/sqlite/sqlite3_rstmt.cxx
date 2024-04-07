@@ -1,5 +1,5 @@
 #include "sqlite3_rstmt.hxx"
-#include <sqlite3.h>
+#include <lib/sqlite3/sqlite3.h>
 
 namespace okibank {
 

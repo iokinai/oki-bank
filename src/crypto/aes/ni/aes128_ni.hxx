@@ -4,15 +4,12 @@
 #include "../aes_consts.hxx"
 #include <array>
 #include <cstdint>
-#include <string>
-#include <vector>
 
 namespace okibank::aes {
 
-std::vector<uint8_t>
-encrypt_aes128(std::string data,
-               const std::array<std::uint8_t, AES128_STATE_SIZE> &key,
-               const std::array<std::uint8_t, AES128_STATE_SIZE> &IV);
+std::array<std::uint8_t, AES128_STATE_SIZE>
+encrypt_block_aes128(const std::array<std::uint8_t, AES128_STATE_SIZE> &block,
+                     const std::array<std::uint8_t, AES128_STATE_SIZE> &key);
 
 } // namespace okibank::aes
 
