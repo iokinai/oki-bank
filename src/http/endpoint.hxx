@@ -12,19 +12,27 @@ class endpoint {
 private:
   http_method method;
   std::string path;
-  parse_handler rhandler;
+  request_handler rhandler;
 
 public:
-  endpoint(http_method method, std::string path, parse_handler rhandler);
+  endpoint(http_method method, std::string path, request_handler rhandler);
   endpoint(const endpoint &) = default;
   endpoint(endpoint &&) = default;
 
   endpoint &operator=(const endpoint &) noexcept = default;
   endpoint &operator=(endpoint &&) noexcept = default;
 
-  constexpr inline http_method get_method() const noexcept;
-  constexpr inline const std::string &get_path() const noexcept;
-  constexpr inline const parse_handler &get_rhandler() const noexcept;
+  http_method get_method() const noexcept {
+    return method;
+  }
+
+  const std::string &get_path() const noexcept {
+    return path;
+  }
+
+  const request_handler &get_rhandler() const noexcept {
+    return rhandler;
+  }
 };
 
 } // namespace http

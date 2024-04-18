@@ -18,9 +18,17 @@ public:
   transaction(const transaction &);
   transaction(transaction &&);
 
-  const private_account_info &get_from(void) const noexcept;
-  const public_account_info &get_to(void) const noexcept;
-  const long double get_amount(void) const noexcept;
+  constexpr inline const private_account_info &get_from(void) const noexcept {
+    return this->from;
+  }
+
+  constexpr inline const public_account_info &get_to(void) const noexcept {
+    return this->to;
+  }
+
+  constexpr inline const long double get_amount(void) const noexcept {
+    return this->amount;
+  }
 };
 
 } // namespace okibank

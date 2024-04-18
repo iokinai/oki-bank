@@ -12,27 +12,46 @@ concept is_oki_iterator = requires(T val) {
   { val.current };
 };
 
-template <is_oki_iterator It> constexpr inline It &operator++(It &val) noexcept;
+template <is_oki_iterator It>
+constexpr inline It &operator++(It &val) noexcept {
+  ++val.current;
+  return val;
+}
 
 template <is_oki_iterator It>
-constexpr inline It operator++(It &val, int) noexcept;
-
-template <is_oki_iterator It> constexpr inline It &operator--(It &val) noexcept;
-
-template <is_oki_iterator It>
-constexpr inline It operator--(It &val, int) noexcept;
-
-template <is_oki_iterator It>
-int16_t operator-(const It &val1, const It &&val2) noexcept;
+constexpr inline It operator++(It &val, int) noexcept {
+  It temp(val);
+  ++val;
+  return temp;
+}
 
 template <is_oki_iterator It>
-bool operator==(const It &val1, const It &val2) noexcept;
+constexpr inline It &operator--(It &val) noexcept {
+  --val.current;
+  return val;
+}
 
 template <is_oki_iterator It>
-bool operator!=(const It &val1, const It &val2) noexcept;
+constexpr inline It operator--(It &val, int) noexcept {
+  It temp(val);
+  ++val;
+  return temp;
+};
 
-template <is_oki_iterator It> It::reference operator*(It &val) noexcept;
+template <is_oki_iterator It>
+int16_t operator-(const It &val1, const It &&val2) noexcept {
+  return val1.current - val2.current;
+}
 
+template <is_oki_iterator It>
+bool operator==(const It &val1, const It &val2) noexcept {
+  return val1.current == val2.current;
+}
+
+template <is_oki_iterator It>
+bool operator!=(const It &val1, const It &val2) noexcept {
+  return val1.current != val2.current;
+}
 class cache_iterator {
 public:
   using value_type = private_user;
@@ -43,7 +62,9 @@ public:
 
   explicit cache_iterator(pointer curr);
 
-  constexpr inline pointer operator->() noexcept;
+  constexpr inline pointer operator->() noexcept {
+    return current;
+  }
 
   pointer current;
 };
@@ -58,7 +79,9 @@ public:
 
   explicit const_cache_iterator(pointer curr);
 
-  constexpr inline pointer operator->() noexcept;
+  constexpr inline pointer operator->() noexcept {
+    return current;
+  }
 
   pointer current;
 };

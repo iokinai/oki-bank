@@ -31,10 +31,23 @@ public:
 
   private_user(private_user &&us);
 
-  const private_account_info &get_private_account_info(void) const noexcept;
-  const std::vector<uint8_t> &get_password_hash(void) const noexcept;
-  const std::string &get_secret_word(void) const noexcept;
-  const std::vector<transaction> &get_transactions(void) const noexcept;
+  constexpr inline const private_account_info &
+  get_private_account_info(void) const noexcept {
+    return this->priv_acc_info;
+  }
+
+  constexpr inline const std::vector<uint8_t> &
+  get_password_hash(void) const noexcept {
+    return this->password_hash;
+  }
+  constexpr inline const std::string &get_secret_word(void) const noexcept {
+    return this->secret_word;
+  }
+
+  constexpr inline const std::vector<transaction> &
+  get_transactions(void) const noexcept {
+    return this->transactions;
+  }
 };
 
 } // namespace okibank

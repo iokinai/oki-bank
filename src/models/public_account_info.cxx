@@ -13,8 +13,4 @@ public_account_info::public_account_info(public_account_info &&acc)
     : card_number(std::move(acc.get_card_number())) {
 }
 
-const std::string &public_account_info::get_card_number(void) const noexcept {
-  return this->card_number;
-}
-
 } // namespace okibank

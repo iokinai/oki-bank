@@ -26,30 +26,4 @@ public_user::public_user(public_user &&user)
       registred_at(std::move(user.get_registred_at())),
       last_online(std::move(user.get_last_online())) {
 }
-
-const std::string &public_user::get_user_name(void) const noexcept {
-  return this->user_name;
-}
-
-const std::string &public_user::get_user_description(void) const noexcept {
-  return this->user_description;
-}
-
-user_status public_user::get_status(void) const noexcept {
-  return this->status;
-}
-
-const date &public_user::get_registred_at(void) const noexcept {
-  return this->registred_at;
-}
-
-const date &public_user::get_last_online(void) const noexcept {
-  return this->last_online;
-}
-
-const public_account_info &
-public_user::get_public_account_info(void) const noexcept {
-  return this->pub_acc_info;
-}
-
 } // namespace okibank

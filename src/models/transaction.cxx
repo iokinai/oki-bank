@@ -18,16 +18,4 @@ transaction::transaction(transaction &&tr)
       amount(std::move(tr.get_amount())) {
 }
 
-const private_account_info &transaction::get_from(void) const noexcept {
-  return this->from;
-}
-
-const public_account_info &transaction::get_to(void) const noexcept {
-  return this->to;
-}
-
-const long double transaction::get_amount(void) const noexcept {
-  return this->amount;
-}
-
 } // namespace okibank

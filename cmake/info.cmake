@@ -24,7 +24,6 @@ set(OKI_THREAD
   src/thread/okimutex.cxx
 )
 set(OKI_CACHE
-  src/cache/cache_iterator.cxx
   src/cache/cache_controller.cxx
   src/cache/std_cache_controller.cxx
 )
@@ -38,7 +37,10 @@ set(OKI_CRYPTO
   src/crypto/aes/ni/aes128_ni.cxx
 )
 set(OKI_SERVER 
-  src/http/llhs/lowlevel.cxx
-  src/http/llhs/server.cxx
-  src/http/llhs/endpoint.cxx
+  src/http/lowlevel.cxx
+  src/http/server.cxx
+  src/http/endpoint.cxx
+  src/http/http_request.cxx
+  src/http/string_ops.cxx
+  src/http/http_method.cxx
 )

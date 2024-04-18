@@ -3,13 +3,13 @@
 
 #include "database/sqldb.hxx"
 #include "database/sqlite/sqlite3_rstmt.hxx"
-#include <lib/http/httplib.h>
+#include "http/server.hxx"
 #include <memory>
 #include <string>
 
-using namespace httplib;
-
 namespace okibank::app {
+
+using namespace http;
 
 template <std::derived_from<sqldb> T> T open_db(const std::string &path) {
   return T(path);
@@ -35,7 +35,7 @@ template <std::derived_from<sqldb> T> void init_db(T &database) {
   database.send(stmt);
 }
 
-std::shared_ptr<Server> create_http_server();
+std::shared_ptr<server> create_http_server();
 
 } // namespace okibank::app
 

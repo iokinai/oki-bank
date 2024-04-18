@@ -24,6 +24,8 @@ link_directories(lib/)
 
 find_library(sqlitelib NAMES sqlite3 REQUIRED)
 
+add_compile_options(-g)
+
 add_library(oki-bank-models SHARED ${MODELS_PROJECT_FILES})
 add_library(oki-bank-sqlite3 SHARED ${SQLITE3_PROJECT_FILES})
 add_library(oki-bank-database SHARED ${DATABASE_PROJECT_FILES})

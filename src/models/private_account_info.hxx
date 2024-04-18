@@ -15,7 +15,9 @@ public:
   private_account_info(const private_account_info &acc);
   private_account_info(private_account_info &&acc);
 
-  uint8_t get_cvc(void) const noexcept;
+  constexpr inline uint8_t get_cvc(void) const noexcept {
+    return this->cvc;
+  }
 };
 
 } // namespace okibank

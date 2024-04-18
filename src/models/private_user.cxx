@@ -44,22 +44,4 @@ private_user::private_user(private_user &&us)
       transactions(std::move(us.get_transactions())) {
 }
 
-const private_account_info &
-private_user::get_private_account_info(void) const noexcept {
-  return this->priv_acc_info;
-}
-
-const std::vector<uint8_t> &
-private_user::get_password_hash(void) const noexcept {
-  return this->password_hash;
-}
-const std::string &private_user::get_secret_word(void) const noexcept {
-  return this->secret_word;
-}
-
-const std::vector<transaction> &
-private_user::get_transactions(void) const noexcept {
-  return this->transactions;
-}
-
 } // namespace okibank

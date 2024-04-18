@@ -1,5 +1,6 @@
 #include "lowlevel.hxx"
 
+#include <cerrno>
 #include <exception>
 #include <netinet/in.h>
 #include <sstream>
@@ -45,7 +46,7 @@ void http_server_bind(socket_t sock, int port) {
   sockaddr_in addr = get_http_sockaddr(port);
 
   if (bind(sock, reinterpret_cast<sockaddr *>(&addr), sizeof(sockaddr)) < 0) {
-    throw std::invalid_argument("Couldn't bind!");
+    throw std::invalid_argument(std::to_string(errno));
   }
 }
 

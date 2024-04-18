@@ -17,13 +17,17 @@ private:
   int backlog;
   std::shared_ptr<okibank::okijthread> listen_thread;
 
-  static void parse_http_request(std::string request);
-
 public:
-  server(int backlog);
+  server(int backlog = 10);
 
-  inline void Get(std::string path, parse_handler rhandler) noexcept;
-  inline void Post(std::string path, parse_handler rhandler) noexcept;
+  inline void Get(std::string path, request_handler rhandler) noexcept {
+    endpoints.push_back({http_method::GET, path, rhandler});
+  }
+
+  inline void Post(std::string path, request_handler rhandler) noexcept {
+    endpoints.push_back({http_method::POST, path, rhandler});
+  }
+
   bool listen(std::string host, int port) noexcept;
 
   ~server();

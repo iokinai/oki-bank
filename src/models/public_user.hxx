@@ -28,12 +28,31 @@ public:
 
   public_user(public_user &&user);
 
-  const std::string &get_user_name(void) const noexcept;
-  const std::string &get_user_description(void) const noexcept;
-  user_status get_status(void) const noexcept;
-  const date &get_registred_at(void) const noexcept;
-  const date &get_last_online(void) const noexcept;
-  const public_account_info &get_public_account_info(void) const noexcept;
+  constexpr inline const std::string &get_user_name(void) const noexcept {
+    return this->user_name;
+  }
+
+  constexpr inline const std::string &
+  get_user_description(void) const noexcept {
+    return this->user_description;
+  }
+
+  constexpr inline user_status get_status(void) const noexcept {
+    return this->status;
+  }
+
+  constexpr inline const date &get_registred_at(void) const noexcept {
+    return this->registred_at;
+  }
+
+  constexpr inline const date &get_last_online(void) const noexcept {
+    return this->last_online;
+  }
+
+  constexpr inline const public_account_info &
+  get_public_account_info(void) const noexcept {
+    return this->pub_acc_info;
+  }
 };
 
 } // namespace okibank

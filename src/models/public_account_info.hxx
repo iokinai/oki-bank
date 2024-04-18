@@ -15,7 +15,9 @@ public:
   public_account_info(const public_account_info &acc);
   public_account_info(public_account_info &&);
 
-  const std::string &get_card_number(void) const noexcept;
+  constexpr inline const std::string &get_card_number(void) const noexcept {
+    return this->card_number;
+  }
 };
 
 } // namespace okibank

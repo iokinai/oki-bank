@@ -55,13 +55,13 @@ bool std_cache_controller<T, size>::insert(
 }
 
 template <class T, heap_size size>
-constexpr inline std_cache_controller<T, size>::std_cache_controller(
+std_cache_controller<T, size>::std_cache_controller(
     const std_cache_controller &other) {
   this->heap = other.heap;
 }
 
 template <class T, heap_size size>
-constexpr inline std_cache_controller<T, size>::std_cache_controller(
+std_cache_controller<T, size>::std_cache_controller(
     std_cache_controller &&other) {
   this->heap = std::move(other.heap);
 }

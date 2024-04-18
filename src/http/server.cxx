@@ -1,6 +1,8 @@
 #include "server.hxx"
-#include "http_method.hxx"
+#include "endpoint.hxx"
+#include "http_request.hxx"
 #include "lowlevel.hxx"
+#include <algorithm>
 #include <vector>
 
 namespace http {
@@ -8,28 +10,36 @@ namespace http {
 server::server(int backlog)
     : sock(-1), endpoints(std::vector<endpoint>()), backlog(backlog),
       listen_thread(nullptr) {
-  //
-}
-
-void server::parse_http_request(std::string request) {}
-
-inline void server::Get(std::string path, parse_handler rhandler) noexcept {
-  endpoints.push_back({http_method::GET, path, rhandler});
-}
-
-inline void server::Post(std::string path, parse_handler rhandler) noexcept {
-  endpoints.push_back({http_method::POST, path, rhandler});
 }
 
 bool server::listen(std::string host, int port) noexcept {
   this->sock = create_http_socket();
-  http_server_bind(sock, port);
+  try {
+    http_server_bind(sock, port);
 
-  start_listening(sock, backlog);
+    start_listening(sock, backlog);
 
-  create_listen_thread(sock, parse_http_request);
+    create_listen_thread(sock, [&](std::string h) {
+      http_request r(h);
 
-  return true;
+      auto ep =
+          std::find_if(endpoints.cbegin(), endpoints.cend(), [&](endpoint ep) {
+            return ep.get_method() == r.get_method() &&
+                   ep.get_path() == r.get_url();
+          });
+
+      if (ep == endpoints.cend()) {
+        return;
+      }
+
+      ep->get_rhandler()(r);
+    });
+
+    return true;
+  } catch (...) {
+    sock_close(sock);
+    throw;
+  }
 }
 
 server::~server() {

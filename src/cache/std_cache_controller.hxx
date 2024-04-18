@@ -26,9 +26,9 @@ public:
   virtual bool
   insert(std::pair<const private_user &, const private_user &> users) noexcept;
 
-  constexpr inline std_cache_controller(const std_cache_controller &other);
+  std_cache_controller(const std_cache_controller &other);
 
-  constexpr inline std_cache_controller(std_cache_controller &&other);
+  std_cache_controller(std_cache_controller &&other);
 };
 
 } // namespace okibank
